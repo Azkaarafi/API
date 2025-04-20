@@ -1,58 +1,38 @@
-# API
+ReviewPiLem (RPL)-API
 
-ReviewPiLem (RPL) - API Aplikasi Review Film dan Series
+ReviewPiLem adalah aplikasi backend berbasis Laravel yang menyediakan API untuk mengelola review film dan series. Aplikasi ini punya tiga jenis pengguna: admin, user, dan guest. Admin punya hak penuh, user bisa login dan mengelola list film, dan guest bisa lihat-lihat data publik.
 
-ReviewPiLem adalah API berbasis Laravel yang menyediakan layanan untuk melihat, menambah, mengedit, dan menghapus data film dan genre, serta sistem autentikasi user menggunakan Laravel Sanctum.
+Stack yang dipakai: Laravel, PHP, MySQL (phpMyAdmin), Laravel Sanctum untuk autentikasi, XAMPP sebagai local server.
 
-Fitur Utama
+Fitur yang sudah dikerjakan:
+- Genre: bisa lihat semua genre (GET /api/genres), tambah genre baru (POST), dan update genre (PUT). Hanya admin yang bisa tambah/edit.
+  ![image](https://github.com/user-attachments/assets/1f4c9260-23df-485a-8d91-a6d89066f5a2)
+- Film: sudah dibuat sebagai resource API (GET, POST, PUT, DELETE) untuk CRUD data film.
+  ![image](https://github.com/user-attachments/assets/119184e9-e256-4a7c-a748-ae37d4720782)
 
-Autentikasi
-- POST /api/register -> register user
-- POST /api/login -> login user
-- POST /api/logout -> logout user (hanya jika sudah login)
+- Autentikasi: sudah ada register (POST /api/register), login (POST /api/login), dan logout (POST /api/logout) pakai Sanctum.
+- Seeder: genre dan film dummy sudah diisi, termasuk admin default (contoh akun: guildhero).
+- Relasi many-to-many antara film dan genre sudah jalan.
 
-Film
-- GET /api/films -> melihat semua film
-- GET /api/films/{id} -> melihat detail film
-- POST /api/films -> menambah film (khusus admin)
-- PUT /api/films/{id} -> mengedit film (khusus admin)
-- DELETE /api/films/{id} -> menghapus film (khusus admin)
 
-Genre
-- GET /api/genres -> melihat semua genre
-- POST /api/genres -> menambah genre (khusus admin)
-- PUT /api/genres/{id} -> mengedit genre (khusus admin)
+Beberapa catatan teknis:
+- Register dan login hanya bisa lewat POST, jadi butuh Postman buat ngetes.
+- File migrasi Sanctum sudah dipublish, dan personal_access_tokens berhasil dibuat.
+- Endpoint jalan di http://localhost:8000/api/
 
-Teknologi yang Digunakan
+Progress sampai saat ini:
+- Migrasi, seeder, dan setup autentikasi sudah beres
+- Data film dan genre tampil dengan relasi genre
+- API register/login udah sukses diuji via Postman
 
-- Laravel 10
-- PHP 8
-- Laravel Sanctum
-- MySQL (phpMyAdmin)
-- Postman (untuk testing API)
+Fitur lanjutan kayak review, list film per user, dan like/dislike review masih tahap selanjutnya.
 
-Struktur Folder Penting
+pengujian pada postman:
+![image](https://github.com/user-attachments/assets/31bac14e-6fc1-4751-a38d-bc0f4327f0a9)
 
-- routes/api.php
-- app/Http/Controllers/AuthController.php
-- app/Http/Controllers/FilmController.php
-- app/Http/Controllers/GenreController.php
-- database/migrations
-- database/seeders
 
-Langkah Setup Sanctum
 
-1. Jalankan perintah:
-   - composer require laravel/sanctum
-   - php artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider"
-   - php artisan migrate
+![image](https://github.com/user-attachments/assets/40ff052e-4ed3-4a02-9e17-929f30204c40)
 
-2. Tambahkan middleware 'auth:sanctum' pada route yang membutuhkan autentikasi.
 
-Contoh:
-Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
-
-Catatan Tambahan
-
-- Akun admin dibuat melalui seeder (contoh: username guildhero, email guildhero@example.com).
-- API ini merupakan bagian dari tugas besar pemrograman backend dengan fokus pada pengelolaan film, user list, dan review.
+  
